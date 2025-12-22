@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+  background: radial-gradient(circle at 20% 20%, rgba(43, 140, 238, 0.1), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(43, 140, 238, 0.08), transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(15, 23, 42, 0.12), transparent 40%),
+    #0b1320;
+}
+
+body {
+  background: radial-gradient(circle at 20% 20%, rgba(43, 140, 238, 0.08), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(43, 140, 238, 0.06), transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(15, 23, 42, 0.06), transparent 40%),
+    #f6f7f8;
+  @apply text-slate-900 antialiased dark:bg-background-dark dark:text-slate-100;
+}
+
+html.dark body {
+  background: radial-gradient(circle at 20% 20%, rgba(43, 140, 238, 0.12), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(43, 140, 238, 0.1), transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(15, 23, 42, 0.18), transparent 40%),
+    #0b1320;
+}
+
+a {
+  @apply text-slate-900 underline-offset-4 transition-colors hover:text-primary dark:text-slate-100;
+}
+
+.card {
+  @apply rounded-2xl border border-slate-200/60 bg-white/90 shadow-[0_8px_30px_rgba(15,23,42,0.08)] backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/50 dark:shadow-none;
+}
+
+.section-shell {
+  @apply space-y-4 rounded-2xl border border-slate-200/60 bg-white/90 p-6 shadow-[0_8px_30px_rgba(15,23,42,0.08)] backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/50 dark:shadow-none;
+}
+
+::selection {
+  background: rgba(43, 140, 238, 0.2);
+}
