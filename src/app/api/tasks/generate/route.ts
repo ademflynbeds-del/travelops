@@ -24,14 +24,14 @@ export async function POST(request: Request) {
     });
 
     const created = await prisma.$transaction(
-      templates.map((template) =>
+      templates.map((template: any) =>
         prisma.taskInstance.create({
           data: {
             templateId: template.id,
             departureId: departure.id,
             title: template.name,
             dueDate: new Date(
-              new Date(departure.departureDate).getTime() - template.offsetDays * 24 * 60 * 60 * 1000
+              new Date(departure.departureDate!).getTime() - template.offsetDays * 24 * 60 * 60 * 1000
             ),
           },
         })

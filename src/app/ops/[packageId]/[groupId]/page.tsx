@@ -246,9 +246,8 @@ function TabList({ tab, setTab }: { tab: TabKey; setTab: (t: TabKey) => void }) 
         <button
           key={t.key}
           onClick={() => setTab(t.key)}
-          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
-            tab === t.key ? "border border-primary/30 bg-primary/10 text-primary" : "bg-slate-100 text-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
-          }`}
+          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${tab === t.key ? "border border-primary/30 bg-primary/10 text-primary" : "bg-slate-100 text-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
+            }`}
           type="button"
         >
           {t.icon}
@@ -333,8 +332,8 @@ function LandTab({
   onAddSupplier: (s: Supplier) => void;
   onRemoveSupplier: (linkId?: string) => void;
   onAddCost: (c: OpsPaymentStep) => void;
-  onUpdateCost: (id?: string, u: Partial<OpsPaymentStep>) => void;
-  onRemoveCost: (id?: string) => void;
+  onUpdateCost: (id: string | undefined, u: Partial<OpsPaymentStep>) => void;
+  onRemoveCost: (id: string | undefined) => void;
 }) {
   return (
     <div className="space-y-4">
@@ -358,8 +357,8 @@ function TeamTab({
 }: {
   group: OpsGroup;
   onAddTimeline: (t: OpsTimelineItem) => void;
-  onUpdateTimeline: (id?: string, u: Partial<OpsTimelineItem>) => void;
-  onRemoveTimeline: (id?: string) => void;
+  onUpdateTimeline: (id: string | undefined, u: Partial<OpsTimelineItem>) => void;
+  onRemoveTimeline: (id: string | undefined) => void;
 }) {
   return (
     <div className="section-shell space-y-3">
@@ -471,8 +470,8 @@ function CostEditor({
 }: {
   costs: OpsPaymentStep[];
   onAdd: (c: OpsPaymentStep) => void;
-  onUpdate: (idx: number, u: Partial<OpsPaymentStep>) => void;
-  onRemove: (idx: number) => void;
+  onUpdate: (id: string | undefined, u: Partial<OpsPaymentStep>) => void;
+  onRemove: (id: string | undefined) => void;
 }) {
   const [draft, setDraft] = useState<OpsPaymentStep>({ label: "Dépôt", amount: 0, dueDate: "", paid: false });
   return (
@@ -537,13 +536,12 @@ function CostEditor({
                 </div>
                 <div className="flex items-center gap-2">
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                      status === "paid"
-                        ? "bg-green-50 text-green-700"
-                        : status === "overdue"
-                          ? "bg-red-50 text-red-700"
-                          : "bg-amber-50 text-amber-700"
-                    }`}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${status === "paid"
+                      ? "bg-green-50 text-green-700"
+                      : status === "overdue"
+                        ? "bg-red-50 text-red-700"
+                        : "bg-amber-50 text-amber-700"
+                      }`}
                   >
                     {status === "paid" ? "Payé" : status === "overdue" ? "En retard" : "À payer"}
                   </span>
@@ -577,8 +575,8 @@ function TimelineEditor({
 }: {
   items: OpsTimelineItem[];
   onAdd: (t: OpsTimelineItem) => void;
-  onUpdate: (idx: number, u: Partial<OpsTimelineItem>) => void;
-  onRemove: (idx: number) => void;
+  onUpdate: (id: string | undefined, u: Partial<OpsTimelineItem>) => void;
+  onRemove: (id: string | undefined) => void;
 }) {
   const [draft, setDraft] = useState<OpsTimelineItem>({
     title: "Étape",

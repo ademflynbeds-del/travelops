@@ -250,7 +250,7 @@ model Booking {
 
 model Supplier {
   id        String       @id @default(cuid())
-  name      String
+  name      String       @unique
   type      SupplierType
   terms     String?
   slaNotes  String?

@@ -4,8 +4,10 @@ import { requireRole } from "../../../../lib/apiAuth";
 import { handleApiError } from "../../../../lib/apiResponse";
 import { logAudit } from "../../../../lib/audit";
 
-export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params;
+import { getParams, RouteContext } from "../../../../lib/routeParams";
+
+export async function PATCH(request: NextRequest, context: RouteContext<{ id: string }>) {
+  const { id } = await getParams(context.params);
   try {
     const session = await requireRole(["administrator", "travel_designer"]);
     const payload = (await request.json()) as {
@@ -24,7 +26,7 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
         description: payload.description ?? undefined,
         productType: payload.productType ?? undefined,
         offsetDays: payload.offsetDays ?? undefined,
-        defaultRole: payload.defaultRole ?? undefined,
+        defaultRole: (payload.defaultRole as any) ?? undefined,
       },
     });
     await logAudit({
@@ -41,8 +43,8 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
   }
 }
 
-export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params;
+export async function DELETE(request: NextRequest, context: RouteContext<{ id: string }>) {
+  const { id } = await getParams(context.params);
   try {
     const session = await requireRole(["administrator"]);
     const existing = await prisma.taskTemplate.findUnique({ where: { id: id } });

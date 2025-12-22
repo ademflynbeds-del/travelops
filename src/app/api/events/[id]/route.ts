@@ -5,6 +5,8 @@ import { requireRole } from "../../../../lib/apiAuth";
 import { handleApiError } from "../../../../lib/apiResponse";
 import { logAudit } from "../../../../lib/audit";
 
+import { getParams, RouteContext } from "../../../../lib/routeParams";
+
 const eventUpdateSchema = z.object({
   name: z.string().optional(),
   startDate: z.string().optional(),
@@ -13,8 +15,8 @@ const eventUpdateSchema = z.object({
   impactScore: z.number().int().optional(),
 });
 
-export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params;
+export async function PATCH(request: NextRequest, context: RouteContext<{ id: string }>) {
+  const { id } = await getParams(context.params);
   try {
     const session = await requireRole(["administrator", "travel_designer"]);
     const payload = eventUpdateSchema.parse(await request.json());

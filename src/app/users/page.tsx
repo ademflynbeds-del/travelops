@@ -65,7 +65,7 @@ export default function UsersPage() {
       setError("Username requis");
       return;
     }
-    if (!editing && !form.password.trim()) {
+    if (!editing && !form.password?.trim()) {
       setError("Password requis");
       return;
     }
@@ -75,7 +75,7 @@ export default function UsersPage() {
         body: JSON.stringify({
           fullName: form.fullName?.trim(),
           role: form.role,
-          password: form.password.trim() || undefined,
+          password: form.password?.trim() || undefined,
         }),
       }).then(() => mutate());
     } else {
@@ -85,7 +85,7 @@ export default function UsersPage() {
           username: form.username.trim(),
           fullName: form.fullName?.trim(),
           role: form.role,
-          password: form.password.trim(),
+          password: form.password?.trim(),
         }),
       }).then(() => mutate());
     }
@@ -138,11 +138,11 @@ export default function UsersPage() {
           </CardHeader>
           <CardContent className="flex flex-wrap items-center gap-3">
             <div className="flex-1">
-                <Input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Rechercher par username, nom ou role"
-                />
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Rechercher par username, nom ou role"
+              />
             </div>
             <span className="text-sm font-semibold text-slate-600 dark:text-slate-300">
               {filtered.length}/{users.length}

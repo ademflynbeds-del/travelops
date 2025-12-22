@@ -38,9 +38,9 @@ export async function POST(request: Request) {
         stage: payload.stage,
         brief: payload.brief ?? undefined,
         research: payload.research ?? undefined,
-        linkedPackageId: payload.linkedPackageId ?? null,
+        linkedPackageId: payload.linkedPackageId ?? undefined,
         ownerId: session.user.id,
-        readinessIssues: readiness.ready ? null : readiness.issues,
+        readinessIssues: readiness.ready ? null : (readiness.issues as any),
       },
     });
     await logAudit({
