@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+export const dynamic = 'force-dynamic';
 import { prisma } from "../../../lib/prisma";
 import { requireRole } from "../../../lib/apiAuth";
 import { handleApiError } from "../../../lib/apiResponse";
@@ -10,10 +11,11 @@ export async function GET() {
   try {
     await requireRole(["administrator", "travel_designer", "sales_agent", "viewer"]);
     const bookings = await prisma.booking.findMany({
+      include: { package: true },
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(
-      bookings.map((booking) => ({
+      bookings.map((booking: any) => ({
         ...booking,
         bookingType: mapBookingTypeToUi(booking.bookingType),
         reservedUntil: booking.reservedUntil?.toISOString().slice(0, 10),

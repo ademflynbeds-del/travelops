@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+export const dynamic = 'force-dynamic';
 import { z } from "zod";
 import { hash } from "bcryptjs";
 import { prisma } from "../../../lib/prisma";
@@ -21,7 +22,7 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(
-      users.map((user) => ({
+      users.map((user: any) => ({
         id: user.id,
         username: user.username,
         role: user.role?.name ?? "viewer",

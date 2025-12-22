@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+export const dynamic = 'force-dynamic';
 import { z } from "zod";
 import { prisma } from "../../../lib/prisma";
 import { requireRole } from "../../../lib/apiAuth";
@@ -47,13 +48,13 @@ export async function POST(request: Request) {
         slaNotes: payload.slaNotes ?? null,
         contacts: payload.contacts
           ? {
-              create: payload.contacts.map((contact) => ({
-                name: contact.name,
-                email: contact.email ?? null,
-                phone: contact.phone ?? null,
-                role: contact.role ?? null,
-              })),
-            }
+            create: payload.contacts.map((contact) => ({
+              name: contact.name,
+              email: contact.email ?? null,
+              phone: contact.phone ?? null,
+              role: contact.role ?? null,
+            })),
+          }
           : undefined,
       },
       include: { contacts: true },

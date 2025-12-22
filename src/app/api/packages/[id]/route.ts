@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+export const dynamic = 'force-dynamic';
 import { prisma } from "../../../../lib/prisma";
 import { requireRole } from "../../../../lib/apiAuth";
 import { handleApiError } from "../../../../lib/apiResponse";
@@ -82,7 +83,7 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
     });
 
     if (structureChanged) {
-      const existingDepartures = existing.departures.map((dep) => ({
+      const existingDepartures = existing.departures.map((dep: any) => ({
         id: dep.id,
         airline: dep.airline,
         departureDate: dep.departureDate,
@@ -121,15 +122,15 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
         }
       }
 
-      const removed = existing.departures.filter((dep) => !matchedIds.has(dep.id));
+      const removed = existing.departures.filter((dep: any) => !matchedIds.has(dep.id));
       if (removed.length) {
         await prisma.departure.deleteMany({
-          where: { id: { in: removed.map((dep) => dep.id) } },
+          where: { id: { in: removed.map((dep: any) => dep.id) } },
         });
       }
 
       const existingKeys = new Set(
-        existing.departures.map((dep) =>
+        existing.departures.map((dep: any) =>
           departureStructureKey({
             id: dep.id,
             airline: dep.airline,
