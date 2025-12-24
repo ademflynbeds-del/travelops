@@ -142,3 +142,8 @@ export const taskInstanceSchema = z.object({
   assigneeId: z.string().optional(),
   notes: z.string().optional(),
 });
+
+export const approvalRequestSchema = z.object({
+  entityType: z.string().min(1),
+  entityId: z.string().min(1),
+});
